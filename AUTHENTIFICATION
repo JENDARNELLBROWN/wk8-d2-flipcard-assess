@@ -1,0 +1,17 @@
+var config = {
+    keylen: 512,
+    digest: 'sha512'
+};
+
+function isPasswordCorrect(passwordAttempt) {
+    var savedHash = `saved-hash-in-db`;
+    var savedSalt = `saved-salt-in-db`;
+    var savedIterations = `saved-interations-in-db`;
+
+    var hash = crypto.pbkdf2Sync(passwordAttempt, savedSalt, savedIterations, config.keylen, config.digest);
+
+    var hashedPassword = hash.toString('base64');
+    return savedHash === hashedPassword;
+}
+
+isPasswordCorrect('myPassword');
